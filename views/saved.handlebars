@@ -1,0 +1,46 @@
+{{> nav/nav}}
+
+<div class="jumbotron text-center">
+    <h1 class="mongo">Saved Articles</h1>
+</div>
+{{!-- Saved Article Div --}}
+{{#each dbArticle}}
+<div class="container saved-article bg-dark  mt-3 mb-4 p-3">
+<div class="row">
+<div class="col-md-6">
+    <a href={{link}} class="link headline text-white">{{title}}</a>
+    <hr>
+     <p class="summary text-white">   {{summary}} </p>
+ <button class="btn float-right btn-light" id="delete-btn" data-id={{_id}}>Delete This Article</button>  
+</div>
+<div class="col-md-6 note-div">
+<form>
+    <div class="form-group">
+    <label for="Textarea" class="text-white">Write your note here.</label>
+    <textarea type="text" id="note-text" class="form-control">
+    </textarea>
+    <button class="mt-3 btn-warning float-right" id="save-note" type="submit" data-id={{_id}}>Save</button>
+    </div>
+</form>
+<div class="saved-note">
+    <ul>
+        {{#if note}}
+        {{#each note}}
+        <li class="text-white">{{text}}</li>
+        {{/each}}
+        {{/if}}
+    </ul>
+</div>
+</div>
+</div>
+</div>
+{{/each}}
+
+<footer class="footer mt-5">
+    <div class="container">
+        <p class="text-center text-white">Mongo Scraper</p>
+    </div>
+</footer>
+
+
+<script src="assets/js/app.js"></script>

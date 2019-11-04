@@ -1,0 +1,32 @@
+{{> nav/nav}}
+
+<div class="jumbotron text-center">
+    <h1 class="mongo">Mongo Scrapper</h1>
+    <br>
+    <button class="btn-warning btn-lg btn" id="scrape-btn">Scrape Articles</button>
+    <button class="btn-warning btn-lg btn" id="clear-btn">Clear Articles</button>
+</div>
+{{!-- Article Div --}}
+<div class="container article-div">
+    {{#each result}}
+    {{#unless saved}}
+    <div class="card border-white mb-3">
+    <div class="card-header bg-dark border-white">
+    <a href={{link}} class="link text-white headline">{{title}}</a>
+    <button class="btn btn-light btn-lg float-right" id="save-btn" data-id={{_id}}>Save</button>
+    </div>
+    <div class="card-body bg-light border-white summary">
+        {{summary}}
+    </div>
+</div>
+    {{/unless}}
+    {{/each}}
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>Mongo Scraper</p>
+    </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
