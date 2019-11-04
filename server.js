@@ -46,7 +46,7 @@ app.get("/articles", function (req, res) {
 });
 
 app.get("/scrape", function(req, res) {
-    axios.get("https://www.nytimes.com/section/world").then(function(response) {
+    axios.get("https://www.nytimes.com/section/technology").then(function(response) {
         const $ = cheerio.load(response.data);
         
         $("a").each(function(i, element) {
