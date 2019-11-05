@@ -24,11 +24,9 @@
 </form>
 <div class="saved-note">
     <ul>
-        {{#if note}}
-        {{#each note}}
-        <li class="text-white">{{text}}</li>
+        {{#each notes}}
+        <li class="text-white">{{this}}</li>
         {{/each}}
-        {{/if}}
     </ul>
 </div>
 </div>

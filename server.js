@@ -27,7 +27,9 @@ app.set("view engine", "handlebars");
 //                     ROUTES
 // ==============================================================
 
+// ///////////////controllers for index.handlebars //////////////////////////
 
+// show all scrapped articles from DB
 app.get("/", function(req, res) {
     db.Article.find({saved: false }, function(err, result) {
         if (err) throw err;
@@ -35,16 +37,8 @@ app.get("/", function(req, res) {
     })
 });
 
-app.get("/articles", function (req, res) {
-    db.Article.find({})
-    .then(function(dbArticle) {
-        res.json(dbArticle);
-    }) 
-    .catch(function(err) {
-        res.json(err);
-    })
-});
 
+// scrapping articles
 app.get("/scrape", function(req, res) {
     axios.get("https://www.nytimes.com/section/technology").then(function(response) {
         const $ = cheerio.load(response.data);
@@ -68,18 +62,7 @@ app.get("/scrape", function(req, res) {
     })
 });
 
-app.get("/saved", function (req, res) {
-    db.Article.find({saved: true})
-    .populate("note")
-    .then(function (dbArticle) {
-        res.render("saved", { dbArticle });
-        console.log(dbArticle)
-    })
-    .catch(function(err) {
-        res.json(err)
-    })
-});
-
+// update one article to saved:true
 app.put("/saved/:id", function(req, res) {
     db.Article.updateOne({ _id: req.params.id }, { $set: {saved: true}})
     .then(function(data) {
@@ -91,18 +74,50 @@ app.put("/saved/:id", function(req, res) {
     })
 });
 
+// clear all articles that not saved
+app.delete("/delete", function (req, res) {
+    db.Article.remove({saved: false})
+    .then(function(data) {
+        console.log(data)
+        res.json(data)
+    })
+    .catch(function(err) {
+        console.log(err)
+    });
+
+});
+
+
+///////////////saved.handlebars controllers ///////////
+
+// render all saved articles from DB
+app.get("/saved", function (req, res) {
+    db.Article.find({saved: true})
+    .populate("notes")
+    .then(function (dbArticle) {
+        res.render("saved", { dbArticle });
+        console.log(dbArticle)
+    })
+    .catch(function(err) {
+        res.json(err)
+    })
+});
+
+// grab one articles and populate its notes.
 
 app.get("/articles/:id", function(req, res) {
     db.Article.findOne({ _id:req.params.id })
     .populate("note")
     .then(function(dbArticle) {
-        res.render(dbArticle);
+        res.json(dbArticle);
     })
     .catch(function(err) {
         res.json(err);
     })
 });
 
+
+// post new note for a saved article
 app.post("/articles/:id", function(req, res) {
     db.Note.create(req.body)
     .then(function(dbNote) {
@@ -116,7 +131,8 @@ app.post("/articles/:id", function(req, res) {
     })
 });
 
-app.put("/delete/:id", function(req, res) {
+// change article status from saved to unsaved
+app.put("/unsaved/:id", function(req, res) {
     db.Article.updateOne({ _id: req.params.id }, { $set: {saved: false}})
     .then(function(data) {
         console.log(data);
@@ -127,12 +143,30 @@ app.put("/delete/:id", function(req, res) {
     })
 });
 
-app.delete("/delete", function (req, res) {
-    db.Article.remove({saved: false})
+app.delete("/notes/:id", function(req, res) {
+    db.note.remove(
+        {_id: req.params.id}
+    ).then(function(result) {
+        res.json(result);
+    })
     .catch(function(err) {
-        console.log(err)
-    });
+        res.json(err);
+    })
 });
+
+/////////////
+// show all articles from DB in json
+app.get("/api/articles", function (req, res) {
+    db.Article.find({})
+    .then(function(dbArticle) {
+        res.json(dbArticle);
+    }) 
+    .catch(function(err) {
+        res.json(err);
+    })
+});
+
+
 
 // ===============================
 //          SERVER

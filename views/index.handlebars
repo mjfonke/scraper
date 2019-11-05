@@ -9,7 +9,7 @@
 {{!-- Article Div --}}
 <div class="container article-div">
     {{#each result}}
-    {{#unless saved}}
+   
     <div class="card border-white mb-3">
     <div class="card-header bg-dark border-white">
     <a href={{link}} class="link text-white headline">{{title}}</a>
@@ -19,9 +19,11 @@
         {{summary}}
     </div>
 </div>
-    {{/unless}}
+    
     {{/each}}
 </div>
+
+
 
 <footer class="footer">
     <div class="container">

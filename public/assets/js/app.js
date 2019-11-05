@@ -35,12 +35,12 @@ $("#clear-btn").on("click", function(event) {
     })
 });
 
-// delete a chosen saved article
+// unsave one saved article
 $(document).on("click", "#delete-btn", function() {
-    var thisId = $(this).attr("data-id");
+    const thisId = $(this).attr("data-id");
     $.ajax({
         method: "PUT",
-        url: "/delete/" + thisId,
+        url: "/unsaved/" + thisId,
       }).then(function(data) {
           console.log(data);
 
@@ -49,12 +49,13 @@ $(document).on("click", "#delete-btn", function() {
 });
 // save note
 $(document).on("click", "#save-note", function() {
-    var thisId = $(this).attr("data-id");
+    const thisId = $(this).attr("data-id");
+    console.log($("#note-text").val());
     $.ajax({
         method: "POST",
         url: "/articles/" + thisId,
         data: {
-            body: $("#note-text" + thisId).val()
+            text: $("#note-text").val()
         }
       }).then(function(data) {
           console.log(data);
