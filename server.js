@@ -1,10 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const axios = require("axios");
-const cheerio = require("cheerio");
 const exphbs = require("express-handlebars");
 const logger = require("morgan");
 
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 const db = require("./models");
 
@@ -58,14 +58,13 @@ app.get("/scrape", function(req, res) {
 
             db.Article.create(result)
             .then(function(dbArticle) {
-                res.render("index", { dbArticle });
                 console.log(dbArticle);
             })
             .catch(function(err) {
                 console.log(err);
             })
         });
-        res.send("Scrape Complete!")
+    res.send("Scrape Complete")
     })
 });
 
