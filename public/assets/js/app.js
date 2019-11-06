@@ -49,13 +49,14 @@ $(document).on("click", "#delete-btn", function() {
 });
 // save note
 $(document).on("click", "#save-note", function() {
-    const thisId = $(this).attr("data-id");
-    console.log($("#note-text").val());
+    let thisId = $(this).attr("data-id");
+    let text = $("#note-text").val().trim();
+    console.log("note: " +text);
     $.ajax({
         method: "POST",
         url: "/articles/" + thisId,
         data: {
-            text: $("#note-text").val()
+            text: text
         }
       }).then(function(data) {
           console.log(data);

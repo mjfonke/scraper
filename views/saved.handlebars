@@ -17,15 +17,15 @@
 <form>
     <div class="form-group">
     <label for="Textarea" class="text-white">Write your note here.</label>
-    <textarea type="text" id="note-text" class="form-control">
+    <textarea type="text" id="note-text" data-id={{_id}} class="form-control">
     </textarea>
     <button class="mt-3 btn-warning float-right" id="save-note" type="submit" data-id={{_id}}>Save</button>
     </div>
 </form>
 <div class="saved-note">
     <ul>
-        {{#each notes}}
-        <li class="text-white">{{this}}</li>
+       {{#each note}}
+        <li class="text-white">{{this.text}}</li>
         {{/each}}
     </ul>
 </div>

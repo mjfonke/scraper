@@ -93,9 +93,9 @@ app.delete("/delete", function (req, res) {
 // render all saved articles from DB
 app.get("/saved", function (req, res) {
     db.Article.find({saved: true})
-    .populate("notes")
+    .populate("note")
     .then(function (dbArticle) {
-        res.render("saved", { dbArticle });
+        res.render("saved" ,{ dbArticle });
         console.log(dbArticle)
     })
     .catch(function(err) {
@@ -123,8 +123,8 @@ app.post("/articles/:id", function(req, res) {
     .then(function(dbNote) {
         return db.Article.findOneAndUpdate({ _id: req.params.id}, {note: dbNote._id}, {new: true});
     })
-    .then(function(dbArticle) {
-        res.json(dbArticle);
+    .then(function(db) {
+        res.json(db);
     })
     .catch(function(err) {
         res.json(err)
