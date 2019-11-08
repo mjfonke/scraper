@@ -121,7 +121,7 @@ app.get("/articles/:id", function(req, res) {
 app.post("/articles/:id", function(req, res) {
     db.Note.create(req.body)
     .then(function(dbNote) {
-        return db.Article.findOneAndUpdate({ _id: req.params.id}, {note: dbNote._id}, {new: true});
+        return db.Article.findOneAndUpdate({ _id: req.params.id}, {$push: {note: dbNote._id}}, {newNote: true});
     })
     .then(function(db) {
         res.json(db);
@@ -143,8 +143,9 @@ app.put("/unsaved/:id", function(req, res) {
     })
 });
 
+// delete a note
 app.delete("/notes/:id", function(req, res) {
-    db.note.remove(
+    db.Note.remove(
         {_id: req.params.id}
     ).then(function(result) {
         res.json(result);
@@ -156,15 +157,15 @@ app.delete("/notes/:id", function(req, res) {
 
 /////////////
 // show all articles from DB in json
-app.get("/api/articles", function (req, res) {
-    db.Article.find({})
-    .then(function(dbArticle) {
-        res.json(dbArticle);
-    }) 
-    .catch(function(err) {
-        res.json(err);
-    })
-});
+// app.get("/api/articles", function (req, res) {
+//     db.Article.find({})
+//     .then(function(dbArticle) {
+//         res.json(dbArticle);
+//     }) 
+//     .catch(function(err) {
+//         res.json(err);
+//     })
+// });
 
 
 

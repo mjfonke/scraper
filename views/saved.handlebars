@@ -11,21 +11,22 @@
     <a href={{link}} class="link headline text-white">{{title}}</a>
     <hr>
      <p class="summary text-white">   {{summary}} </p>
- <button class="btn float-right btn-light" id="delete-btn" data-id={{_id}}>Delete This Article</button>  
+ <button class="btn float-right btn-light" id="delete-btn" data-id={{_id}}>Delete This Article</button> 
+ {{!-- <button class="btn float-right btn-light mr-3" id="note-btn" data-id="{{_id}}">Add Note</button>  --}}
 </div>
 <div class="col-md-6 note-div">
-<form>
-    <div class="form-group">
-    <label for="Textarea" class="text-white">Write your note here.</label>
-    <textarea type="text" id="note-text" data-id={{_id}} class="form-control">
-    </textarea>
-    <button class="mt-3 btn-warning float-right" id="save-note" type="submit" data-id={{_id}}>Save</button>
-    </div>
-</form>
+<div class="control-group">
+<label for="textarea" class="text-white">Write your note here.</label>
+<textarea type="text" id="note-text" data-id={{_id}} class="form-control">
+</textarea>
+<button class="mt-3 btn-warning float-right" id="save-note" type="submit" data-id={{_id}}>Save</button>
+</div>
+
 <div class="saved-note">
     <ul>
        {{#each note}}
-        <li class="text-white">{{this.text}}</li>
+        <li class="text-white">{{this.text}}<button class="btn text-warning ml-2" id="delete-note" data-id={{_id}}>X</button></li>
+        
         {{/each}}
     </ul>
 </div>

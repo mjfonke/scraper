@@ -47,11 +47,13 @@ $(document).on("click", "#delete-btn", function() {
           window.location = "/saved"
         });
 });
+
+
 // save note
 $(document).on("click", "#save-note", function() {
-    let thisId = $(this).attr("data-id");
-    let text = $("#note-text").val().trim();
-    console.log("note: " +text);
+    const thisId = $(this).attr("data-id");
+    const text = $("#note-text").val();
+    console.log("note: " + text);
     $.ajax({
         method: "POST",
         url: "/articles/" + thisId,
@@ -63,3 +65,16 @@ $(document).on("click", "#save-note", function() {
           window.location = "/saved"
         })
 });
+
+// delete notes
+$("#delete-note").on("click",function(event) {
+    event.preventDefault();
+    const thisId = $(this).attr("data-id");
+    console.log(thisId)
+    $.ajax({
+        method: "DELETE",
+        url: "/notes/" + thisId,
+    }).then(function() {
+        window.location = "/saved"
+    })
+})
